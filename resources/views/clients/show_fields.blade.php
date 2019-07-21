@@ -10,6 +10,12 @@
     <p>{!! $clients->name !!}</p>
 </div>
 
+<!-- Surname Field -->
+<div class="form-group">
+    {!! Form::label('surname', __('client.surname') . ':') !!}
+    <p>{!! $clients->surname !!}</p>
+</div>
+
 <!-- Email Field -->
 <div class="form-group">
     {!! Form::label('email', __('client.email') . ':') !!}

@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return redirect('login');
 });
@@ -19,8 +21,8 @@ Route::get('/home', function () {
     return redirect('clients');
 });
 
-Auth::routes();
-
 Route::resource('clients', 'ClientsController');
 
 Route::resource('bills', 'BillsController');
+
+Route::get('pdf/bill/{id}', 'BillsController@generatePDF');

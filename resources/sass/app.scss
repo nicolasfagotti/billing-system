@@ -7,9 +7,10 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
-.content-header {
-    .add-new-button {
-
+.box {
+    .box-body {
+        .btn-right {
+            margin-right: 20px;
+        }
     }
-    // padding: 20px 15px 10px 15px;
 }

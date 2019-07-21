@@ -5,6 +5,7 @@ return [
     'label_plural' => 'Clients',
     'id' => 'Id',
     'name' => 'Name',
+    'surname' => 'Surname',
     'email' => 'Email',
     'address' => 'Address',
     'created' => 'Created At',

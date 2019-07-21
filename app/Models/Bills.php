@@ -43,9 +43,13 @@ class Bills extends Model
         'amount' => 'required'
     ];
 
-    public function getClient($id)
+    public function getClient()
     {
-        $client = DB::table('clients')->find($id);
-        return $client->name;
+        return Clients::find($this->client_id);
+    }
+
+    public function formatedAmount()
+    {
+        return '$ ' . number_format($this->amount, 2, ',', '.');
     }
 }

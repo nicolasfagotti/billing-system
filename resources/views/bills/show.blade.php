@@ -9,7 +9,9 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @include('bills.show_fields')
-                    <a href="{!! route('bills.index') !!}" class="btn btn-default">{!! __('form.back') !!}</a>
+                    <div class="text-right">
+                        <a href="{!! route('bills.index') !!}" class="btn btn-default btn-right">{!! __('form.back') !!}</a>
+                    </div>
                 </div>
             </div>
         </div>

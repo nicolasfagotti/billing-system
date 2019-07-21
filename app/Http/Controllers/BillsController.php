@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateBillsRequest;
 use App\Http\Requests\UpdateBillsRequest;
 use App\Repositories\BillsRepository;
+use App\Repositories\ClientsRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Utils\DateToText;
+use App\Utils\NumberToText;
 use Flash;
+use PDF;
 use Response;
 
 class BillsController extends AppBaseController
@@ -16,9 +19,13 @@ class BillsController extends AppBaseController
     /** @var  BillsRepository */
     private $billsRepository;
 
-    public function __construct(BillsRepository $billsRepo)
+    /** @var  ClientsRepository */
+    private $clientsRepository;
+
+    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo)
     {
         $this->billsRepository = $billsRepo;
+        $this->clientsRepository = $clientsRepo;
     }
 
     /**
@@ -42,7 +49,7 @@ class BillsController extends AppBaseController
      */
     public function create()
     {
-        $clients = DB::table('clients')->pluck('name', 'id');
+        $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
         return view('bills.create')->with('clients', $clients);;
     }
 
@@ -94,7 +101,7 @@ class BillsController extends AppBaseController
     public function edit($id)
     {
         $bills = $this->billsRepository->find($id);
-        $clients = DB::table('clients')->pluck('name', 'id');
+        $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
 
         if (empty($bills)) {
             Flash::error(__('bill.message.not_found'));
@@ -154,5 +161,28 @@ class BillsController extends AppBaseController
         Flash::success(__('bill.message.deleted'));
 
         return redirect(route('bills.index'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generatePDF($id)
+    {
+        $bill = $this->billsRepository->find($id);
+        $client = $this->clientsRepository->find($bill->client_id);
+
+        $title = "$client->full_name - $bill->created_at";
+        $data = [
+            'title' => $title,
+            'date' => DateToText::convert($bill->created_at),
+            'clientName' => $client->full_name,
+            'amount' => $bill->formatedAmount(),
+            'amountText' => NumberToText::convert($bill->amount),
+        ];
+        $pdf = PDF::loadView('pdf.bill', $data);
+
+        return $pdf->download("$title.pdf");
     }
 }

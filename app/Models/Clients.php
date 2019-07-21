@@ -19,6 +19,7 @@ class Clients extends Model
 
     public $fillable = [
         'name',
+        'surname',
         'email',
         'address'
     ];
@@ -31,6 +32,7 @@ class Clients extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
+        'surname' => 'string',
         'email' => 'string',
         'address' => 'string'
     ];
@@ -41,7 +43,13 @@ class Clients extends Model
      * @var array
      */
     public static $rules = [
-        'email' => 'required|email',
-        'address' => 'required'
+        'name' => 'required',
+        'surname' => 'required',
+        'email' => 'email'
     ];
+
+    public function getFullNameAttribute()
+    {
+        return "$this->surname, $this->name";
+    }
 }

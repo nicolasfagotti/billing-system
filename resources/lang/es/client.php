@@ -5,6 +5,7 @@ return [
     'label_plural' => 'Clientes',
     'id' => 'Id',
     'name' => 'Nombre',
+    'surname' => 'Apellido',
     'email' => 'Email',
     'address' => 'Dirección',
     'created' => 'Fecha de Creación',

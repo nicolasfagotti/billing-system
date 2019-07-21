@@ -7,13 +7,13 @@
 <!-- Client Id Field -->
 <div class="form-group">
     {!! Form::label('client_id', __('client.label') . ':') !!}
-    <p>{!! $bills->client_id !!}</p>
+    <p>{!! $bills->getClient()->full_name !!}</p>
 </div>
 
 <!-- Amount Field -->
 <div class="form-group">
     {!! Form::label('amount', __('bill.amount') . ':') !!}
-    <p>$ {!! $bills->amount !!}</p>
+    <p>{!! $bills->formatedAmount() !!}</p>
 </div>
 
 <!-- Created At Field -->

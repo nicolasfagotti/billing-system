@@ -11,7 +11,7 @@
         <tbody>
         @foreach($clients as $clients)
             <tr>
-                <td>{!! $clients->name !!}</td>
+                <td>{!! $clients->full_name !!}</td>
                 <td>{!! $clients->email !!}</td>
                 <td>{!! $clients->address !!}</td>
                 <td class="text-right">
