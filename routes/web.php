@@ -14,15 +14,15 @@
 Auth::routes();
 
 Route::get('/', function () {
-    return redirect('login');
+    return redirect('clients');
 });
 
 Route::get('/home', function () {
     return redirect('clients');
 });
 
-Route::resource('clients', 'ClientsController');
+Route::resource('clients', 'ClientsController')->middleware('auth');
 
-Route::resource('bills', 'BillsController');
+Route::resource('bills', 'BillsController')->middleware('auth');
 
-Route::get('pdf/bill/{id}', 'BillsController@generatePDF');
+Route::get('pdf/bill/{id}', 'BillsController@generatePDF')->middleware('auth');

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{!! $title !!}</title>
+		<title>{!! $title !!}</title>
 </head>
 <body>
     <div style="margin: 20px 0 60px 0; text-align: right;">{!! $date !!}</div>

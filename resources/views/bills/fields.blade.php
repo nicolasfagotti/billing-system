@@ -7,7 +7,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('amount', __('bill.amount') . ':') !!}
-    {!! Form::text('amount', null, ['class' => 'form-control']) !!}
+    {!! Form::number('amount', null, ['class' => 'form-control', 'step' => '0.01']) !!}
 </div>
 
 <!-- Submit Field -->
