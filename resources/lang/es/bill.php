@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'label' => 'Factura',
-    'label_plural' => 'Facturas',
+    'label' => 'Recibo',
+    'label_plural' => 'Recibos',
     'id' => 'Id',
     'amount' => 'Importe',
     'created' => 'Fecha de Creación',
     'updated' => 'Fecha de Actualización',
     'message' => [
-        'saved' => 'Factura agregada satisfactoriamente.',
-        'updated' => 'Factura actualizada satisfactoriamente.',
-        'deleted' => 'Factura eliminada.',
-        'not_found' => 'Factura no encontrada.',
+        'saved' => 'Recibo agregado satisfactoriamente.',
+        'updated' => 'Recibo actualizado satisfactoriamente.',
+        'deleted' => 'Recibo eliminado.',
+        'not_found' => 'Recibo no encontrado.',
     ]
 ];

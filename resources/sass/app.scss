@@ -7,6 +7,24 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
+.main-header {
+    .logo .circle-image {
+        float: left;
+        width: 25px;
+        height: 25px;
+        margin-top: 12px;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+}
+
+.sidebar-menu {
+    i.glyphicon {
+        margin-right: 10px;
+        font-size: 20px;
+    }
+}
+
 .box {
     .box-body {
         .btn-right {

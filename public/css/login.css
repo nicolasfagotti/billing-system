@@ -1,0 +1,9 @@
+.login-box .login-logo .circle-image {
+  float: left;
+  width: 60px;
+  height: 60px;
+  margin-top: 0px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
