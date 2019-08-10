@@ -15,7 +15,11 @@
         @include('bills.filters')
         <div class="box box-primary">
             <div class="box-body">
+                @if(count($bills) > 0)
                 @include('bills.table')
+                @else
+                {!! __('form.filters.no_results_message') !!}
+                @endif
             </div>
         </div>
         <div class="text-center">

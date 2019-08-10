@@ -13,6 +13,7 @@ return [
         'placeholder_all' => '-- Show all clients --',
         'client' => 'Client',
         'from_date' => 'From Date',
-        'to_date' => 'To Date'
+        'to_date' => 'To Date',
+        'no_results_message' => 'No results found'
     ]
 ];

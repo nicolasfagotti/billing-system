@@ -13,6 +13,7 @@ return [
         'placeholder_all' => '-- Todos los clientes --',
         'client' => 'Cliente',
         'from_date' => 'Fecha Desde',
-        'to_date' => 'Fecha Hasta'
+        'to_date' => 'Fecha Hasta',
+        'no_results_message' => 'No se encontraron resultados para la búsqueda seleccionada'
     ]
 ];
