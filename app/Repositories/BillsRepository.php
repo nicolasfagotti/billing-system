@@ -17,7 +17,8 @@ class BillsRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        
+        'client_id',
+        'created_at'
     ];
 
     /**

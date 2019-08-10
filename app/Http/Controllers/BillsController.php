@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBillsRequest;
 use App\Http\Requests\UpdateBillsRequest;
+use App\Http\Controllers\AppBaseController;
 use App\Repositories\BillsRepository;
 use App\Repositories\ClientsRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
 use App\Utils\DateToText;
 use App\Utils\NumberToText;
+use Illuminate\Http\Request;
 use Flash;
 use PDF;
 use Response;
@@ -37,9 +37,18 @@ class BillsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $bills = $this->billsRepository->all();
+        $filters = [];
+        if ($request->input('client_id')) {
+            $filters['client_id'] = $request->input('client_id');
+        }
 
-        return view('bills.index')->with('bills', $bills);
+        $bills = $this->billsRepository->all($filters);
+        $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
+
+        return view('bills.index')
+            ->with('bills', $bills)
+            ->with('clients', $clients)
+            ->with('filters', $filters);
     }
 
     /**

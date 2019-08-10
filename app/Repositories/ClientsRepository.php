@@ -17,9 +17,6 @@ class ClientsRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'description',
-        'email',
-        'address'
     ];
 
     /**

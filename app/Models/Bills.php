@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class Bills

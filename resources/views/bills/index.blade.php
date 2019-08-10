@@ -11,6 +11,8 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
+
+        @include('bills.filters')
         <div class="box box-primary">
             <div class="box-body">
                 @include('bills.table')
