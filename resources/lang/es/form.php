@@ -10,6 +10,9 @@ return [
         'label' => 'Filtros',
         'submit' => 'Buscar',
         'placeholder_select' => '-- Selecciona un cliente --',
-        'placeholder_all' => '-- Mostrar todos los clientes --'
+        'placeholder_all' => '-- Todos los clientes --',
+        'client' => 'Cliente',
+        'from_date' => 'Fecha Desde',
+        'to_date' => 'Fecha Hasta'
     ]
 ];

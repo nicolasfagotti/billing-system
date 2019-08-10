@@ -10,6 +10,9 @@ return [
         'label' => 'Filters',
         'submit' => 'Search',
         'placeholder_select' => '-- Select a client --',
-        'placeholder_all' => '-- Show all clients --'
+        'placeholder_all' => '-- Show all clients --',
+        'client' => 'Client',
+        'from_date' => 'From Date',
+        'to_date' => 'To Date'
     ]
 ];

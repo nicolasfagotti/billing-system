@@ -38,11 +38,22 @@ class BillsController extends AppBaseController
     public function index(Request $request)
     {
         $filters = [];
+        $billsQuery = $this->billsRepository->makeModel()->newQuery();
+
         if ($request->input('client_id')) {
             $filters['client_id'] = $request->input('client_id');
+            $billsQuery->where('client_id', '=', $filters['client_id']);
+        }
+        if ($request->input('from_date')) {
+            $filters['from_date'] = $request->input('from_date');
+            $billsQuery->where('created_at', '>=', $filters['from_date'] . ' 00:00:00');
+        }
+        if ($request->input('to_date')) {
+            $filters['to_date'] = $request->input('to_date');
+            $billsQuery->where('created_at', '<=', $filters['to_date'] . ' 23:59:59');
         }
 
-        $bills = $this->billsRepository->all($filters);
+        $bills = $billsQuery->get();
         $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
 
         return view('bills.index')

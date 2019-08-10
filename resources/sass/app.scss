@@ -34,5 +34,9 @@
 }
 
 .filter-box {
-    margin: 10px 0 20px 0;
+    margin: 15px 0 25px 0;
+
+    .form-control {
+        margin-right: 20px;
+    }
 }
