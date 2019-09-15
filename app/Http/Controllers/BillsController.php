@@ -206,7 +206,7 @@ class BillsController extends AppBaseController
             'clientName' => $client->full_name,
             'concepts' => $concepts,
             'amount' => $bill->getFormatedAmount(),
-            'amountText' => NumberToText::convert($bill->amount),
+            'amountText' => NumberToText::convert($bill->getAmount()),
         ];
         $pdf = PDF::loadView('pdf.bill', $data);
 

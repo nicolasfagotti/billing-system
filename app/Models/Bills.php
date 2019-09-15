@@ -17,8 +17,7 @@ class Bills extends Model
     public $table = 'bills';
 
     public $fillable = [
-        'client_id',
-        'amount'
+        'client_id'
     ];
 
     /**
@@ -28,8 +27,7 @@ class Bills extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'client_id' => 'integer',
-        'amount' => 'double'
+        'client_id' => 'integer'
     ];
 
     /**
@@ -38,8 +36,7 @@ class Bills extends Model
      * @var array
      */
     public static $rules = [
-        'client_id' => 'required',
-        'amount' => 'required'
+        'client_id' => 'required'
     ];
 
     public function getClient()
@@ -51,6 +48,12 @@ class Bills extends Model
     {
         $concepts = Concepts::where('bill_id', $this->id)->get();
         return $concepts;
+    }
+
+    public function getAmount()
+    {
+        $amount = Concepts::where('bill_id', $this->id)->sum('amount');
+        return $amount;
     }
 
     public function getFormatedAmount()
