@@ -10,10 +10,23 @@
     <p>{!! $bills->getClient()->full_name !!}</p>
 </div>
 
+<!-- Concepts -->
+<div class="form-group">
+    {!! Form::label('concepts', __('concept.label_plural') . ':') !!}
+    <table class="table">
+        @foreach($bills->getConcepts() as $concept)
+        <tr>
+            <td>{!! $concept->detail !!}</td>
+            <td>{!! $concept->getFormatedAmount() !!}</td>
+        </tr>
+        @endforeach
+    </table>
+</div>
+
 <!-- Amount Field -->
 <div class="form-group">
     {!! Form::label('amount', __('bill.amount') . ':') !!}
-    <p>{!! $bills->formatedAmount() !!}</p>
+    <p>{!! $bills->getFormatedAmount() !!}</p>
 </div>
 
 <!-- Created At Field -->

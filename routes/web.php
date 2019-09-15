@@ -21,8 +21,8 @@ Route::get('/home', function () {
     return redirect('clients');
 });
 
-Route::resource('clients', 'ClientsController')->middleware('auth');
-
 Route::resource('bills', 'BillsController')->middleware('auth');
+Route::resource('clients', 'ClientsController')->middleware('auth');
+Route::resource('concepts', 'ConceptsController')->middleware('auth');
 
 Route::get('pdf/bill/{id}', 'BillsController@generatePDF')->middleware('auth');

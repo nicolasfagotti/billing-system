@@ -3,6 +3,7 @@
 return [
     'add_new_bill' => 'Add Bill',
     'add_new_client' => 'Add Client',
+    'add_new_concept' => 'Add Concept',
     'save' => 'Save',
     'cancel' => 'Cancel',
     'back' => 'Back',

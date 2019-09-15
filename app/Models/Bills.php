@@ -47,8 +47,15 @@ class Bills extends Model
         return Clients::find($this->client_id);
     }
 
-    public function formatedAmount()
+    public function getConcepts()
     {
-        return '$ ' . number_format($this->amount, 2, ',', '.');
+        $concepts = Concepts::where('bill_id', $this->id)->get();
+        return $concepts;
+    }
+
+    public function getFormatedAmount()
+    {
+        $amount = Concepts::where('bill_id', $this->id)->sum('amount');
+        return '$ ' . number_format($amount, 2, ',', '.');
     }
 }

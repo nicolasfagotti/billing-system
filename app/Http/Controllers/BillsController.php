@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBillsRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\BillsRepository;
 use App\Repositories\ClientsRepository;
+use App\Repositories\ConceptsRepository;
 use App\Utils\DateToText;
 use App\Utils\NumberToText;
 use Illuminate\Http\Request;
@@ -22,10 +23,14 @@ class BillsController extends AppBaseController
     /** @var  ClientsRepository */
     private $clientsRepository;
 
-    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo)
+    /** @var  ConceptsRepository */
+    private $conceptsRepository;
+
+    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo, ConceptsRepository $conceptsRepo)
     {
         $this->billsRepository = $billsRepo;
         $this->clientsRepository = $clientsRepo;
+        $this->conceptsRepository = $conceptsRepo;
     }
 
     /**
@@ -192,13 +197,15 @@ class BillsController extends AppBaseController
     {
         $bill = $this->billsRepository->find($id);
         $client = $this->clientsRepository->find($bill->client_id);
+        $concepts = $this->conceptsRepository->all(['bill_id' => $id]);
 
         $title = "$client->full_name - $bill->created_at";
         $data = [
             'title' => $title,
             'date' => DateToText::convert($bill->created_at),
             'clientName' => $client->full_name,
-            'amount' => $bill->formatedAmount(),
+            'concepts' => $concepts,
+            'amount' => $bill->getFormatedAmount(),
             'amountText' => NumberToText::convert($bill->amount),
         ];
         $pdf = PDF::loadView('pdf.bill', $data);

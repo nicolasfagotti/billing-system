@@ -13,7 +13,7 @@
             <tr>
                 <td>{!! $bills->created_at !!}</td>
                 <td>{!! $bills->getClient()->full_name !!}</td>
-                <td class="text-right">{!! $bills->formatedAmount() !!}</td>
+                <td class="text-right">{!! $bills->getFormatedAmount() !!}</td>
                 <td class="text-right">
                     {!! Form::open(['route' => ['bills.destroy', $bills->id], 'method' => 'delete']) !!}
                     <div class="btn-group">

@@ -3,6 +3,7 @@
 return [
     'add_new_bill' => 'Agregar Factura',
     'add_new_client' => 'Agregar Cliente',
+    'add_new_concept' => 'Agregar Concepto',
     'save' => 'Guardar',
     'cancel' => 'Cancelar',
     'back' => 'Volver',
