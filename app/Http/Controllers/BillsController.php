@@ -90,6 +90,9 @@ class BillsController extends AppBaseController
         $input = $request->all();
 
         $bills = $this->billsRepository->create($input);
+        for ($i = 0; $i < count($input['detail']); $i++) {
+            $this->conceptsRepository->create(['bill_id' => $bills->id, 'detail' => $input['detail'][$i], 'amount' => $input['amount'][$i]]);
+        }
 
         Flash::success(__('bill.message.saved'));
 

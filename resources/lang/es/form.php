@@ -1,9 +1,10 @@
 <?php
 
 return [
-    'add_new_bill' => 'Agregar Factura',
+    'add_new_bill' => 'Agregar Recibo',
     'add_new_client' => 'Agregar Cliente',
     'add_new_concept' => 'Agregar Concepto',
+    'delete_concept' => 'Eliminar Concepto',
     'save' => 'Guardar',
     'cancel' => 'Cancelar',
     'back' => 'Volver',
