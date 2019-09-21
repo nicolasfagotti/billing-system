@@ -23,6 +23,12 @@
     </table>
 </div>
 
+<!-- Cash Field -->
+<div class="form-group">
+    {!! Form::label('id', __('bill.cash') . ':') !!}
+    <p>{!! $bills->getFormatedCash() !!}</p>
+</div>
+
 <!-- Amount Field -->
 <div class="form-group">
     {!! Form::label('amount', __('bill.amount') . ':') !!}

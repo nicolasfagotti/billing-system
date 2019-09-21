@@ -17,7 +17,8 @@ class Bills extends Model
     public $table = 'bills';
 
     public $fillable = [
-        'client_id'
+        'client_id',
+        'cash'
     ];
 
     /**
@@ -27,7 +28,8 @@ class Bills extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'client_id' => 'integer'
+        'client_id' => 'integer',
+        'cash' => 'double'
     ];
 
     /**
@@ -36,12 +38,18 @@ class Bills extends Model
      * @var array
      */
     public static $rules = [
-        'client_id' => 'required'
+        'client_id' => 'required',
+        'cash' => 'required'
     ];
 
     public function getClient()
     {
         return Clients::find($this->client_id);
+    }
+
+    public function getFormatedCash()
+    {
+        return '$ ' . number_format($this->cash, 2, ',', '.');
     }
 
     public function getConcepts()

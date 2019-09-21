@@ -4,6 +4,11 @@
     {!! Form::select('client_id', $clients, null, ['class' => 'form-control']) !!}
 </div>
 
+<div class="form-group col-sm-6">
+    {!! Form::label('cash', __('bill.cash') . ':') !!}
+    {!! Form::number('cash', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!}
+</div>
+
 <!-- Concepts -->
 @if(isset($bills))
 <div class="form-group col-sm-12">

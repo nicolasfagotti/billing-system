@@ -58,7 +58,7 @@ class BillsController extends AppBaseController
             $billsQuery->where('created_at', '<=', $filters['to_date'] . ' 23:59:59');
         }
 
-        $bills = $billsQuery->get();
+        $bills = $billsQuery->orderBy('created_at', 'desc')->get();
         $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
 
         return view('bills.index')

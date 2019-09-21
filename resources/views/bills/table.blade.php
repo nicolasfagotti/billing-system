@@ -11,7 +11,7 @@
         <tbody>
         @foreach($bills as $bills)
             <tr>
-                <td>{!! $bills->created_at !!}</td>
+                <td>{!! date('d/m/Y H:i:s', strtotime($bills->created_at)) !!}</td>
                 <td>{!! $bills->getClient()->full_name !!}</td>
                 <td class="text-right">{!! $bills->getFormatedAmount() !!}</td>
                 <td class="text-right">

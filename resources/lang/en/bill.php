@@ -4,6 +4,7 @@ return [
     'label' => 'Bill',
     'label_plural' => 'Bills',
     'id' => 'Id',
+    'cash' => 'Cash',
     'amount' => 'Total Amount',
     'created' => 'Created At',
     'updated' => 'Updated At',

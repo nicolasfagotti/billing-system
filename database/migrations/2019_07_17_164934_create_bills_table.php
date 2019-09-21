@@ -16,7 +16,7 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('client_id')->unsigned();
-            $table->double('amount');
+            $table->double('cash')->default(0);
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients');
         });

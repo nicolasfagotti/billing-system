@@ -4,6 +4,7 @@ return [
     'label' => 'Recibo',
     'label_plural' => 'Recibos',
     'id' => 'Id',
+    'cash' => 'Efectivo',
     'amount' => 'Importe Total',
     'created' => 'Fecha de Creación',
     'updated' => 'Fecha de Actualización',
