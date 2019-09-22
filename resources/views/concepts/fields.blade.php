@@ -6,13 +6,13 @@
 
 <!-- Bill Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', __('bill.label') . ':') !!}
+    {!! Form::label('bill_id', __('bill.label') . ':') !!}
     {!! Form::text('bill_id', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Detail Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('name', __('concept.detail') . ':') !!}
+    {!! Form::label('detail', __('concept.detail') . ':') !!}
     {!! Form::text('detail', null, ['class' => 'form-control']) !!}
 </div>
 
