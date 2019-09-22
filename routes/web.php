@@ -26,3 +26,6 @@ Route::resource('clients', 'ClientsController')->middleware('auth');
 Route::resource('concepts', 'ConceptsController')->middleware('auth');
 
 Route::get('pdf/bill/{id}', 'BillsController@generatePDF')->middleware('auth');
+
+
+Route::resource('checks', 'ChecksController');

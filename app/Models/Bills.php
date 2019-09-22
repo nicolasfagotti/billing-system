@@ -60,13 +60,13 @@ class Bills extends Model
 
     public function getAmount()
     {
-        $amount = Concepts::where('bill_id', $this->id)->sum('amount');
-        return $amount;
+        $amount = Checks::where('bill_id', $this->id)->sum('amount');
+        return $amount + $this->cash;
     }
 
     public function getFormatedAmount()
     {
-        $amount = Concepts::where('bill_id', $this->id)->sum('amount');
-        return '$ ' . number_format($amount, 2, ',', '.');
+        $amount = Checks::where('bill_id', $this->id)->sum('amount');
+        return '$ ' . number_format($amount + $this->cash, 2, ',', '.');
     }
 }
