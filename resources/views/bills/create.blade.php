@@ -6,17 +6,10 @@
     </section>
     <div class="content">
         @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
+        {!! Form::open(['route' => 'bills.store']) !!}
 
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'bills.store']) !!}
+            @include('bills.fields')
 
-                        @include('bills.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
+        {!! Form::close() !!}
     </div>
 @endsection

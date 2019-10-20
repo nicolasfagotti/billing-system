@@ -3,19 +3,13 @@
 @section('content')
     <section class="content-header">
         <h1>{!! __('bill.label') !!}</h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($bills, ['route' => ['bills.update', $bills->id], 'method' => 'patch']) !!}
+    </section>
+    <div class="content">
+        @include('adminlte-templates::common.errors')
+        {!! Form::model($bills, ['route' => ['bills.update', $bills->id], 'method' => 'patch']) !!}
 
-                        @include('bills.fields')
+            @include('bills.fields')
 
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
+        {!! Form::close() !!}
+    </div>
 @endsection

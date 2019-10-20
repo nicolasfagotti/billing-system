@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'label' => 'Cheques',
-    'label_plural' => 'Cheque',
+    'label' => 'Cheque',
+    'label_plural' => 'Cheques',
     'id' => 'Id',
     'number' => 'Numero',
     'amount' => 'Importe',

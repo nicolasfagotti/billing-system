@@ -8,9 +8,11 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\BillsRepository;
 use App\Repositories\ClientsRepository;
 use App\Repositories\ConceptsRepository;
+use App\Repositories\ChecksRepository;
 use App\Utils\DateToText;
 use App\Utils\NumberToText;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Flash;
 use PDF;
 use Response;
@@ -26,11 +28,15 @@ class BillsController extends AppBaseController
     /** @var  ConceptsRepository */
     private $conceptsRepository;
 
-    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo, ConceptsRepository $conceptsRepo)
+    /** @var  ChecksRepository */
+    private $checksRepository;
+
+    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo, ConceptsRepository $conceptsRepo, ChecksRepository $checksRepo)
     {
         $this->billsRepository = $billsRepo;
         $this->clientsRepository = $clientsRepo;
         $this->conceptsRepository = $conceptsRepo;
+        $this->checksRepository = $checksRepo;
     }
 
     /**
@@ -75,7 +81,9 @@ class BillsController extends AppBaseController
     public function create()
     {
         $clients = $this->clientsRepository->all()->pluck('full_name', 'id');
-        return view('bills.create')->with('clients', $clients);;
+        $banks = DB::table('banks')->pluck('name', 'id');
+
+        return view('bills.create')->with('banks', $banks)->with('clients', $clients);
     }
 
     /**
@@ -91,7 +99,19 @@ class BillsController extends AppBaseController
 
         $bills = $this->billsRepository->create($input);
         for ($i = 0; $i < count($input['detail']); $i++) {
-            $this->conceptsRepository->create(['bill_id' => $bills->id, 'detail' => $input['detail'][$i], 'amount' => $input['amount'][$i]]);
+            $this->conceptsRepository->create([
+                'bill_id' => $bills->id,
+                'detail' => $input['detail'][$i],
+                'amount' => $input['amount'][$i]]
+            );
+        }
+        for ($i = 0; $i < count($input['check_number']); $i++) {
+            $this->checksRepository->create([
+                'bill_id' => $bills->id,
+                'number' => $input['check_number'][$i],
+                'bank_id' => $input['check_bank'][$i],
+                'amount' => $input['check_amount'][$i]]
+            );
         }
 
         Flash::success(__('bill.message.saved'));
@@ -200,6 +220,7 @@ class BillsController extends AppBaseController
     {
         $bill = $this->billsRepository->find($id);
         $client = $this->clientsRepository->find($bill->client_id);
+        $checks = $this->checksRepository->all(['bill_id' => $id]);
         $concepts = $this->conceptsRepository->all(['bill_id' => $id]);
 
         $title = "$client->full_name - $bill->created_at";
@@ -207,8 +228,9 @@ class BillsController extends AppBaseController
             'title' => $title,
             'date' => DateToText::convert($bill->created_at),
             'clientName' => $client->full_name,
+            'bill' => $bill,
+            'checks' => $checks,
             'concepts' => $concepts,
-            'amount' => $bill->getFormatedAmount(),
             'amountText' => NumberToText::convert($bill->getAmount()),
         ];
         $pdf = PDF::loadView('pdf.bill', $data);

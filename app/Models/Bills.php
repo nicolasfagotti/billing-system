@@ -52,6 +52,12 @@ class Bills extends Model
         return '$ ' . number_format($this->cash, 2, ',', '.');
     }
 
+    public function getChecks()
+    {
+        $checks = Checks::where('bill_id', $this->id)->get();
+        return $checks;
+    }
+
     public function getConcepts()
     {
         $concepts = Concepts::where('bill_id', $this->id)->get();

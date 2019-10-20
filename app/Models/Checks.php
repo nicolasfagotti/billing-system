@@ -18,7 +18,7 @@ class Checks extends Model
 {
 
     public $table = 'checks';
-    
+
 
 
     public $fillable = [
@@ -53,5 +53,13 @@ class Checks extends Model
         'bill_id' => 'required'
     ];
 
-    
+    public function getBank()
+    {
+        return Banks::find($this->bank_id);
+    }
+
+    public function getFormatedAmount()
+    {
+        return '$ ' . number_format($this->amount, 2, ',', '.');
+    }
 }
