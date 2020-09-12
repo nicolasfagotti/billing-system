@@ -105,13 +105,15 @@ class BillsController extends AppBaseController
                 'amount' => $input['amount'][$i]]
             );
         }
-        for ($i = 0; $i < count($input['check_number']); $i++) {
-            $this->checksRepository->create([
-                'bill_id' => $bills->id,
-                'number' => $input['check_number'][$i],
-                'bank_id' => $input['check_bank'][$i],
-                'amount' => $input['check_amount'][$i]]
-            );
+        if (isset($input['check_number'])) {
+            for ($i = 0; $i < count($input['check_number']); $i++) {
+                $this->checksRepository->create([
+                    'bill_id' => $bills->id,
+                    'number' => $input['check_number'][$i],
+                    'bank_id' => $input['check_bank'][$i],
+                    'amount' => $input['check_amount'][$i]]
+                );
+            }
         }
 
         Flash::success(__('bill.message.saved'));

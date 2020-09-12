@@ -5,6 +5,7 @@ return [
     'add_new_client' => 'Agregar Cliente',
     'add_new_concept' => 'Agregar Concepto',
     'add_new_check' => 'Agregar Cheque',
+    'add_new_transfer' => 'Agregar Transferencia Bancaria',
     'delete_concept' => 'Eliminar Concepto',
     'delete_check' => 'Eliminar Cheque',
     'save' => 'Guardar',

@@ -2,7 +2,7 @@
     <div class="box-body">
         <div class="row">
             <!-- Client Id Field -->
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-6">
                 {!! Form::label('client_id', __('client.label') . ':') !!}
                 {!! Form::select('client_id', $clients, null, ['class' => 'form-control']) !!}
             </div>
@@ -61,21 +61,27 @@
                 {!! Form::number('cash', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!}
             </div>
 
-            <!-- Checks -->
-            <div class="form-group col-sm-12">
-                <button id="add-check-button" class="btn btn-success btn-sm">{!! __('form.add_new_check') !!}</button>
+            <div class="form-group col-sm-6 text-right">
+                <div class="cash-btn-group">
+                    <button id="add-check-button" class="btn btn-success btn-sm">{!! __('form.add_new_check') !!}</button>
+                    <button disabled="disabled" id="add-check-button" class="btn btn-success btn-sm">{!! __('form.add_new_transfer') !!}</button>
+                </div>
             </div>
+        </div>
+
+        <!-- Checks -->
+        <div class="row">
             <div class="form-group col-sm-4" id="column-check-number">
-                {!! Form::label('check_number', __('check.number') . ':') !!}
-                {!! Form::number('check_number[]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                <!-- {!! Form::label('check_number', __('check.number') . ':') !!} -->
+                <!-- {!! Form::number('check_number[]', null, ['class' => 'form-control', 'required' => 'required']) !!} -->
             </div>
             <div class="form-group col-sm-4" id="column-check-bank">
-                {!! Form::label('check_bank', __('check.bank') . ':') !!}
-                {!! Form::select('check_bank[]', $banks, null, ['class' => 'form-control']) !!}
+                <!-- {!! Form::label('check_bank', __('check.bank') . ':') !!} -->
+                <!-- {!! Form::select('check_bank[]', $banks, null, ['class' => 'form-control']) !!} -->
             </div>
             <div class="form-group col-sm-4" id="column-check-amount">
-                {!! Form::label('check_amount', __('concept.amount') . ':') !!}
-                {!! Form::number('check_amount[]', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!}
+                <!-- {!! Form::label('check_amount', __('concept.amount') . ':') !!} -->
+                <!-- {!! Form::number('check_amount[]', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!} -->
             </div>
         </div>
     </div>
@@ -84,10 +90,7 @@
     <div class="box-body">
         <div class="row">
             <!-- Concepts -->
-            <div class="form-group col-sm-12">
-                <button id="add-concept-button" class="btn btn-success btn-sm">{!! __('form.add_new_concept') !!}</button>
-            </div>
-            <div class="form-group col-sm-8" id="column-detail">
+            <div class="form-group col-sm-6" id="column-detail">
                 {!! Form::label('detail', __('concept.detail') . ':') !!}
                 {!! Form::text('detail[]', null, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
@@ -95,10 +98,25 @@
                 {!! Form::label('amount', __('concept.amount') . ':') !!}
                 {!! Form::number('amount[]', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!}
             </div>
+            <div class="form-group col-sm-2 text-right">
+                <div class="concept-btn">
+                    <button id="add-concept-button" class="btn btn-success btn-sm">{!! __('form.add_new_concept') !!}</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endif
+
+<!-- Submit Field -->
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="form-group col-sm-12 text-right">
+            {!! Form::submit(__('form.save'), ['class' => 'btn btn-primary']) !!}
+            <a href="{!! route('bills.index') !!}" class="btn btn-default">{!! __('form.cancel') !!}</a>
+        </div>
+    </div>
+</div>
 
 @if(!isset($bills))
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
@@ -119,9 +137,9 @@
             if (x < maxFields) {
                 x++;
                 $('#check-rm').remove();
-                $(cCheckNumber).append('<input class="form-control column-check-number-item" required="required" name="check_number[]" type="number">');
-                $(cCheckBank).append('<input class="form-control column-check-bank-item" required="required" name="check_bank[]" type="number">');
-                $(cCheckAmount).append('<input class="form-control column-check-amount-item" required="required" step="0.01" name="check_amount[]" type="number">')
+                $(cCheckNumber).append('<input class="form-control column-check-number-item" required="required" name="check_number[]" type="number" placeholder="{!! __('check.number') !!}">');
+                $(cCheckBank).append(getBankSelect());
+                $(cCheckAmount).append('<input class="form-control column-check-amount-item" required="required" step="0.01" name="check_amount[]" type="number" placeholder="{!! __('check.amount') !!}">')
                     .append('<a href="#" id="check-rm" class="remove-check-field">{!! __('form.delete_check') !!}</a>');
             }
         });
@@ -158,16 +176,21 @@
             }
             y--;
         });
+
+        // TODO: Replace with an Ajax call
+        function getBankSelect() {
+            return '<select class="form-control column-check-bank-item" name="check_bank[]">' +
+                '<option value="1">Banco BBVA</option>' +
+                '<option value="2">Banco Galicia</option>' +
+                '<option value="3">Banco HSBC</option>' +
+                '<option value="4">Banco ICBC</option>' +
+                '<option value="6">Banco Nación</option>' +
+                '<option value="5">Banco Macro</option>' +
+                '<option value="7">Banco Patagonia</option>' +
+                '<option value="8">Banco Provincia</option>' +
+                '<option value="9">Banco Santander</option>' +
+                '</select>';
+        }
     });
 </script>
 @endif
-
-<!-- Submit Field -->
-<div class="box box-primary">
-    <div class="box-body">
-        <div class="form-group col-sm-12 text-right">
-            {!! Form::submit(__('form.save'), ['class' => 'btn btn-primary']) !!}
-            <a href="{!! route('bills.index') !!}" class="btn btn-default">{!! __('form.cancel') !!}</a>
-        </div>
-    </div>
-</div>

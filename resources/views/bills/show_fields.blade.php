@@ -49,6 +49,7 @@
                 </div>
 
                 <!-- Checks -->
+                @if(count($bills->getChecks()) > 0)
                 <div class="form-group">
                     {!! Form::label('checks', __('check.label_plural') . ':') !!}
                     <table class="table">
@@ -61,6 +62,7 @@
                         @endforeach
                     </table>
                 </div>
+                @endif
             </div>
         </div>
     </div>
