@@ -22,8 +22,9 @@ Route::get('/home', function () {
 });
 
 Route::resource('bills', 'BillsController')->middleware('auth');
+Route::resource('checks', 'ChecksController')->middleware('auth');
 Route::resource('clients', 'ClientsController')->middleware('auth');
 Route::resource('concepts', 'ConceptsController')->middleware('auth');
-Route::resource('checks', 'ChecksController')->middleware('auth');
+Route::resource('transfers', 'TransfersController')->middleware('auth');
 
 Route::get('pdf/bill/{id}', 'BillsController@generatePDF')->middleware('auth');
