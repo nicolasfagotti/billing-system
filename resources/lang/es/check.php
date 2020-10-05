@@ -4,7 +4,7 @@ return [
     'label' => 'Cheque',
     'label_plural' => 'Cheques',
     'id' => 'Id',
-    'number' => 'Numero',
+    'number' => 'Numero de Cheque',
     'amount' => 'Importe',
     'bank' => 'Banco',
     'created' => 'Fecha de Creación',

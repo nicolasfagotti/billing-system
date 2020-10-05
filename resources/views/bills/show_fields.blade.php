@@ -63,6 +63,22 @@
                     </table>
                 </div>
                 @endif
+
+                <!-- Transfers -->
+                @if(count($bills->getTransfers()) > 0)
+                <div class="form-group">
+                    {!! Form::label('transfers', __('transfer.label_plural') . ':') !!}
+                    <table class="table">
+                        @foreach($bills->getTransfers() as $transfer)
+                        <tr>
+                            <td>{!! $transfer->number !!}</td>
+                            <td>{!! $transfer->getBank()->name !!}</td>
+                            <td class="text-right">{!! $transfer->getFormatedAmount() !!}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                @endif
             </div>
         </div>
     </div>

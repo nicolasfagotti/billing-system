@@ -8,6 +8,7 @@ return [
     'add_new_transfer' => 'Add Wire Transfer',
     'delete_concept' => 'Delete Concept',
     'delete_check' => 'Delete Check',
+    'delete_transfer' => 'Delete Transfer',
     'save' => 'Save',
     'cancel' => 'Cancel',
     'back' => 'Back',

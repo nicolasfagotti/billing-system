@@ -26,7 +26,19 @@
                         <tr>
                             <td>{!! $check->number !!}</td>
                             <td>{!! $check->getBank()->name !!}</td>
-                            <td>{!! $check->getFormatedAmount() !!}</td>
+                            <td class="text-right">{!! $check->getFormatedAmount() !!}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('transfers', __('transfer.label_plural') . ':') !!}
+                    <table class="table">
+                        @foreach($bills->getTransfers() as $transfer)
+                        <tr>
+                            <td>{!! $transfer->number !!}</td>
+                            <td>{!! $transfer->getBank()->name !!}</td>
+                            <td class="text-right">{!! $transfer->getFormatedAmount() !!}</td>
                         </tr>
                         @endforeach
                     </table>
@@ -43,7 +55,7 @@
                         @foreach($bills->getConcepts() as $concept)
                         <tr>
                             <td>{!! $concept->detail !!}</td>
-                            <td>{!! $concept->getFormatedAmount() !!}</td>
+                            <td class="text-right">{!! $concept->getFormatedAmount() !!}</td>
                         </tr>
                         @endforeach
                     </table>
@@ -64,7 +76,7 @@
             <div class="form-group col-sm-6 text-right">
                 <div class="cash-btn-group">
                     <button id="add-check-button" class="btn btn-success btn-sm">{!! __('form.add_new_check') !!}</button>
-                    <button disabled="disabled" id="add-check-button" class="btn btn-success btn-sm">{!! __('form.add_new_transfer') !!}</button>
+                    <button id="add-transfer-button" class="btn btn-success btn-sm">{!! __('form.add_new_transfer') !!}</button>
                 </div>
             </div>
         </div>
@@ -82,6 +94,22 @@
             <div class="form-group col-sm-4" id="column-check-amount">
                 <!-- {!! Form::label('check_amount', __('concept.amount') . ':') !!} -->
                 <!-- {!! Form::number('check_amount[]', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!} -->
+            </div>
+        </div>
+
+        <!-- Transfers -->
+        <div class="row">
+            <div class="form-group col-sm-4" id="column-transfer-number">
+                <!-- {!! Form::label('transfer_number', __('transfer.number') . ':') !!} -->
+                <!-- {!! Form::number('transfer_number[]', null, ['class' => 'form-control', 'required' => 'required']) !!} -->
+            </div>
+            <div class="form-group col-sm-4" id="column-transfer-bank">
+                <!-- {!! Form::label('transfer_bank', __('transfer.bank') . ':') !!} -->
+                <!-- {!! Form::select('transfer_bank[]', $banks, null, ['class' => 'form-control']) !!} -->
+            </div>
+            <div class="form-group col-sm-4" id="column-transfer-amount">
+                <!-- {!! Form::label('transfer_amount', __('transfer.amount') . ':') !!} -->
+                <!-- {!! Form::number('transfer_amount[]', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) !!} -->
             </div>
         </div>
     </div>
@@ -122,38 +150,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        var maxFields = 10;                              // Maximum input boxes allowed
-        var cDetail = $('#column-detail');               // Fields wrapper
-        var cAmount = $('#column-amount');               // Fields wrapper
-        var cCheckNumber = $('#column-check-number');    // Fields wrapper
-        var cCheckBank = $('#column-check-bank');        // Fields wrapper
-        var cCheckAmount = $('#column-check-amount');    // Fields wrapper
-        var addCheckButton = $('#add-check-button');     // Add Check button ID
-        var addConceptButton = $('#add-concept-button'); // Add Concept button ID
-
-        var x = 0;
-        $(addCheckButton).click(function(e) {
-        e.preventDefault();
-            if (x < maxFields) {
-                x++;
-                $('#check-rm').remove();
-                $(cCheckNumber).append('<input class="form-control column-check-number-item" required="required" name="check_number[]" type="number" placeholder="{!! __('check.number') !!}">');
-                $(cCheckBank).append(getBankSelect());
-                $(cCheckAmount).append('<input class="form-control column-check-amount-item" required="required" step="0.01" name="check_amount[]" type="number" placeholder="{!! __('check.amount') !!}">')
-                    .append('<a href="#" id="check-rm" class="remove-check-field">{!! __('form.delete_check') !!}</a>');
-            }
-        });
-
-        $(cCheckAmount).on('click', '.remove-check-field', function(e) {
-            e.preventDefault();
-            $('.column-check-number-item').last().remove();
-            $('.column-check-bank-item').last().remove();
-            $('.column-check-amount-item').last().remove();
-            if (x === 1) {
-                $('#check-rm').remove();
-            }
-            x--;
-        });
+        var maxFields = 10;                                    // Maximum input boxes allowed
+        var cDetail = $('#column-detail');                     // Fields wrapper
+        var cAmount = $('#column-amount');                     // Fields wrapper
+        var addConceptButton = $('#add-concept-button');       // Add Concept button ID
 
         var y = 0;
         $(addConceptButton).click(function(e) {
@@ -177,9 +177,40 @@
             y--;
         });
 
+        function enableExtraPayment(id, numberLabel, amountLabel, deleteLabel) {
+            var cBank = $('#column-' + id + '-bank');     // Fields wrapper
+            var cNumber = $('#column-' + id + '-number'); // Fields wrapper
+            var cAmount = $('#column-' + id + '-amount'); // Fields wrapper
+            var addButton = $('#add-' + id + '-button');  // Add button ID
+
+            var x = 0;
+            $(addButton).click(function(e) {
+            e.preventDefault();
+                if (x < maxFields) {
+                    x++;
+                    $('#' + id + '-rm').remove();
+                    $(cNumber).append('<input class="form-control column-' + id + '-number-item" required="required" name="' + id + '_number[]" type="number" placeholder="' + numberLabel + '">');
+                    $(cBank).append(getBankSelect(id));
+                    $(cAmount).append('<input class="form-control column-' + id + '-amount-item" required="required" step="0.01" name="' + id + '_amount[]" type="number" placeholder="' + amountLabel + '">')
+                        .append('<a href="#" id="' + id + '-rm" class="remove-' + id + '-field">' + deleteLabel + '</a>');
+                }
+            });
+
+            $(cAmount).on('click', '.remove-' + id + '-field', function(e) {
+                e.preventDefault();
+                $('.column-' + id + '-number-item').last().remove();
+                $('.column-' + id + '-bank-item').last().remove();
+                $('.column-' + id + '-amount-item').last().remove();
+                if (x === 1) {
+                    $('#' + id + '-rm').remove();
+                }
+                x--;
+            });
+        }
+
         // TODO: Replace with an Ajax call
-        function getBankSelect() {
-            return '<select class="form-control column-check-bank-item" name="check_bank[]">' +
+        function getBankSelect(id) {
+            return '<select class="form-control column-' + id + '-bank-item" name="' + id + '_bank[]">' +
                 '<option value="1">Banco BBVA</option>' +
                 '<option value="2">Banco Galicia</option>' +
                 '<option value="3">Banco HSBC</option>' +
@@ -191,6 +222,9 @@
                 '<option value="9">Banco Santander</option>' +
                 '</select>';
         }
+
+        enableExtraPayment('check', '{!! __('check.number') !!}', '{!! __('check.amount') !!}', '{!! __('form.delete_check') !!}');
+        enableExtraPayment('transfer', '{!! __('transfer.number') !!}', '{!! __('transfer.amount') !!}', '{!! __('form.delete_transfer') !!}');
     });
 </script>
 @endif

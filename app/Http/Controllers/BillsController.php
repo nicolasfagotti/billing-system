@@ -9,6 +9,7 @@ use App\Repositories\BillsRepository;
 use App\Repositories\ClientsRepository;
 use App\Repositories\ConceptsRepository;
 use App\Repositories\ChecksRepository;
+use App\Repositories\TransfersRepository;
 use App\Utils\DateToText;
 use App\Utils\NumberToText;
 use Illuminate\Http\Request;
@@ -31,12 +32,16 @@ class BillsController extends AppBaseController
     /** @var  ChecksRepository */
     private $checksRepository;
 
-    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo, ConceptsRepository $conceptsRepo, ChecksRepository $checksRepo)
+    /** @var  TransfersRepository */
+    private $transfersRepository;
+
+    public function __construct(BillsRepository $billsRepo, ClientsRepository $clientsRepo, ConceptsRepository $conceptsRepo, ChecksRepository $checksRepo, TransfersRepository $transfersRepo)
     {
         $this->billsRepository = $billsRepo;
         $this->clientsRepository = $clientsRepo;
         $this->conceptsRepository = $conceptsRepo;
         $this->checksRepository = $checksRepo;
+        $this->transfersRepository = $transfersRepo;
     }
 
     /**
@@ -112,6 +117,16 @@ class BillsController extends AppBaseController
                     'number' => $input['check_number'][$i],
                     'bank_id' => $input['check_bank'][$i],
                     'amount' => $input['check_amount'][$i]]
+                );
+            }
+        }
+        if (isset($input['transfer_number'])) {
+            for ($i = 0; $i < count($input['transfer_number']); $i++) {
+                $this->transfersRepository->create([
+                    'bill_id' => $bills->id,
+                    'number' => $input['transfer_number'][$i],
+                    'bank_id' => $input['transfer_bank'][$i],
+                    'amount' => $input['transfer_amount'][$i]]
                 );
             }
         }

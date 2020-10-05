@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Banks extends Model
 {
-
     public $table = 'banks';
 
     public $fillable = [

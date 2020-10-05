@@ -16,11 +16,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Transfers extends Model
 {
-
     public $table = 'transfers';
-    
-
-
 
     public $fillable = [
         'number',
@@ -48,8 +44,19 @@ class Transfers extends Model
      * @var array
      */
     public static $rules = [
-        
+        'number' => 'required',
+        'amount' => 'required',
+        'bank_id' => 'required',
+        'bill_id' => 'required'
     ];
 
-    
+    public function getBank()
+    {
+        return Banks::find($this->bank_id);
+    }
+
+    public function getFormatedAmount()
+    {
+        return '$ ' . number_format($this->amount, 2, ',', '.');
+    }
 }

@@ -58,6 +58,12 @@ class Bills extends Model
         return $checks;
     }
 
+    public function getTransfers()
+    {
+        $transfers = Transfers::where('bill_id', $this->id)->get();
+        return $transfers;
+    }
+
     public function getConcepts()
     {
         $concepts = Concepts::where('bill_id', $this->id)->get();

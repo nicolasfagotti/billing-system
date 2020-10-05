@@ -16,10 +16,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Checks extends Model
 {
-
     public $table = 'checks';
-
-
 
     public $fillable = [
         'number',

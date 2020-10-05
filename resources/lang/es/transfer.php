@@ -4,7 +4,7 @@ return [
     'label' => 'Transferencia',
     'label_plural' => 'Transferencias',
     'id' => 'Id',
-    'number' => 'Numero',
+    'number' => 'Numero de Transferencia',
     'amount' => 'Importe',
     'bank' => 'Banco',
     'created' => 'Fecha de Creación',

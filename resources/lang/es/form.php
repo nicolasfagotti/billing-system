@@ -8,6 +8,7 @@ return [
     'add_new_transfer' => 'Agregar Transferencia Bancaria',
     'delete_concept' => 'Eliminar Concepto',
     'delete_check' => 'Eliminar Cheque',
+    'delete_transfer' => 'Eliminar Transferencia',
     'save' => 'Guardar',
     'cancel' => 'Cancelar',
     'back' => 'Volver',
