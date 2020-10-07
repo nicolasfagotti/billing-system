@@ -238,6 +238,7 @@ class BillsController extends AppBaseController
         $bill = $this->billsRepository->find($id);
         $client = $this->clientsRepository->find($bill->client_id);
         $checks = $this->checksRepository->all(['bill_id' => $id]);
+        $transfers = $this->transfersRepository->all(['bill_id' => $id]);
         $concepts = $this->conceptsRepository->all(['bill_id' => $id]);
 
         $title = "$client->full_name - $bill->created_at";
@@ -248,6 +249,7 @@ class BillsController extends AppBaseController
             'bill' => $bill,
             'checks' => $checks,
             'concepts' => $concepts,
+            'transfers' => $transfers,
             'amountText' => NumberToText::convert($bill->getAmount()),
         ];
         $pdf = PDF::loadView('pdf.bill', $data);

@@ -72,13 +72,15 @@ class Bills extends Model
 
     public function getAmount()
     {
-        $amount = Checks::where('bill_id', $this->id)->sum('amount');
-        return $amount + $this->cash;
+        $cAmount = Checks::where('bill_id', $this->id)->sum('amount');
+        $tAmount = Transfers::where('bill_id', $this->id)->sum('amount');
+        return $cAmount + $tAmount + $this->cash;
     }
 
     public function getFormatedAmount()
     {
-        $amount = Checks::where('bill_id', $this->id)->sum('amount');
-        return '$ ' . number_format($amount + $this->cash, 2, ',', '.');
+        $cAmount = Checks::where('bill_id', $this->id)->sum('amount');
+        $tAmount = Transfers::where('bill_id', $this->id)->sum('amount');
+        return '$ ' . number_format($cAmount + $tAmount + $this->cash, 2, ',', '.');
     }
 }
