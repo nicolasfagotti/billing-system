@@ -150,50 +150,47 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        var maxFields = 10;                                    // Maximum input boxes allowed
-        var cDetail = $('#column-detail');                     // Fields wrapper
-        var cAmount = $('#column-amount');                     // Fields wrapper
-        var addConceptButton = $('#add-concept-button');       // Add Concept button ID
+        function enableConcept() {
+            var cDetail = $('#column-detail');                // Fields wrapper
+            var cAmount = $('#column-amount');                // Fields wrapper
+            var addConceptButton = $('#add-concept-button');  // Add Concept button ID
 
-        var y = 0;
-        $(addConceptButton).click(function(e) {
-        e.preventDefault();
-            if (y < maxFields) {
-                y++;
+            var count = 0;
+            $(addConceptButton).click(function(e) {
+                e.preventDefault();
+                count++;
                 $('#rm').remove();
                 $(cDetail).append('<input class="form-control column-detail-item" required="required" name="detail[]" type="text">');
                 $(cAmount).append('<input class="form-control column-amount-item" required="required" step="0.01" name="amount[]" type="number">')
                     .append('<a href="#" id="rm" class="remove-field">{!! __('form.delete_concept') !!}</a>');
-            }
-        });
+            });
 
-        $(cAmount).on('click', '.remove-field', function(e) {
-            e.preventDefault();
-            $('.column-detail-item').last().remove();
-            $('.column-amount-item').last().remove();
-            if (y === 1) {
-                $('#rm').remove();
-            }
-            y--;
-        });
+            $(cAmount).on('click', '.remove-field', function(e) {
+                e.preventDefault();
+                $('.column-detail-item').last().remove();
+                $('.column-amount-item').last().remove();
+                if (count === 1) {
+                    $('#rm').remove();
+                }
+                count--;
+            });
+        }
 
         function enableExtraPayment(id, numberLabel, amountLabel, deleteLabel) {
-            var cBank = $('#column-' + id + '-bank');     // Fields wrapper
-            var cNumber = $('#column-' + id + '-number'); // Fields wrapper
-            var cAmount = $('#column-' + id + '-amount'); // Fields wrapper
-            var addButton = $('#add-' + id + '-button');  // Add button ID
+            var cBank = $('#column-' + id + '-bank');      // Fields wrapper
+            var cNumber = $('#column-' + id + '-number');  // Fields wrapper
+            var cAmount = $('#column-' + id + '-amount');  // Fields wrapper
+            var addButton = $('#add-' + id + '-button');   // Add button ID
 
-            var x = 0;
+            var count = 0;
             $(addButton).click(function(e) {
-            e.preventDefault();
-                if (x < maxFields) {
-                    x++;
-                    $('#' + id + '-rm').remove();
-                    $(cNumber).append('<input class="form-control column-' + id + '-number-item" required="required" name="' + id + '_number[]" type="number" placeholder="' + numberLabel + '">');
-                    $(cBank).append(getBankSelect(id));
-                    $(cAmount).append('<input class="form-control column-' + id + '-amount-item" required="required" step="0.01" name="' + id + '_amount[]" type="number" placeholder="' + amountLabel + '">')
-                        .append('<a href="#" id="' + id + '-rm" class="remove-' + id + '-field">' + deleteLabel + '</a>');
-                }
+                e.preventDefault();
+                count++;
+                $('#' + id + '-rm').remove();
+                $(cNumber).append('<input class="form-control column-' + id + '-number-item" required="required" name="' + id + '_number[]" type="number" placeholder="' + numberLabel + '">');
+                $(cBank).append(getBankSelect(id));
+                $(cAmount).append('<input class="form-control column-' + id + '-amount-item" required="required" step="0.01" name="' + id + '_amount[]" type="number" placeholder="' + amountLabel + '">')
+                    .append('<a href="#" id="' + id + '-rm" class="remove-' + id + '-field">' + deleteLabel + '</a>');
             });
 
             $(cAmount).on('click', '.remove-' + id + '-field', function(e) {
@@ -201,10 +198,10 @@
                 $('.column-' + id + '-number-item').last().remove();
                 $('.column-' + id + '-bank-item').last().remove();
                 $('.column-' + id + '-amount-item').last().remove();
-                if (x === 1) {
+                if (count === 1) {
                     $('#' + id + '-rm').remove();
                 }
-                x--;
+                count--;
             });
         }
 
@@ -223,8 +220,44 @@
                 '</select>';
         }
 
+        function validateImports() {
+            var conceptTotal = Array.from($('#column-amount').find('input'))
+                .map((el) => $(el).val())
+                .reduce((a, b) => parseFloat(a) + parseFloat(b));
+
+            var checks = Array.from($('#column-check-amount').find('input'));
+            var checkTotal = 0;
+            if (checks.length > 0) {
+                checkTotal = checks
+                    .map((el) => $(el).val())
+                    .reduce((a, b) => parseFloat(a) + parseFloat(b));
+            }
+
+            var transfers = Array.from($('#column-transfer-amount').find('input'));
+            var transferTotal = 0;
+            if (transfers.length > 0) {
+                transferTotal = transfers
+                    .map((el) => $(el).val())
+                    .reduce((a, b) => parseFloat(a) + parseFloat(b));
+            }
+
+            var paymentsTotal = parseFloat($('#cash').val()) + parseFloat(checkTotal) + parseFloat(transferTotal);
+            if (parseFloat(conceptTotal) === paymentsTotal) {
+              return true;
+            }
+
+            console.log('Conceptos: ', parseFloat(conceptTotal), 'Pagos: ', paymentsTotal);
+            alert('El valor de los conceptos no es igual al valor de los pagos.');
+            return false;
+        }
+
         enableExtraPayment('check', '{!! __('check.number') !!}', '{!! __('check.amount') !!}', '{!! __('form.delete_check') !!}');
         enableExtraPayment('transfer', '{!! __('transfer.number') !!}', '{!! __('transfer.amount') !!}', '{!! __('form.delete_transfer') !!}');
+        enableConcept();
+
+        $(".main-form").on("submit", function() {
+            return validateImports();
+        })
     });
 </script>
 @endif

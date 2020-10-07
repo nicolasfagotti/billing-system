@@ -6,7 +6,7 @@
     </section>
     <div class="content">
         @include('adminlte-templates::common.errors')
-        {!! Form::open(['route' => 'bills.store']) !!}
+        {!! Form::open(['route' => 'bills.store', 'class' => 'main-form']) !!}
 
             @include('bills.fields')
 

@@ -6,7 +6,7 @@
     </section>
     <div class="content">
         @include('adminlte-templates::common.errors')
-        {!! Form::model($bills, ['route' => ['bills.update', $bills->id], 'method' => 'patch']) !!}
+        {!! Form::model($bills, ['route' => ['bills.update', $bills->id], 'method' => 'patch', 'class' => 'main-form']) !!}
 
             @include('bills.fields')
 
