@@ -17,9 +17,9 @@
                 <td class="text-right">
                     {!! Form::open(['route' => ['bills.destroy', $bills->id], 'method' => 'delete']) !!}
                     <div class="btn-group">
-                        <a title="PDF" href="/pdf/bill/{!! $bills->id !!}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-file"></i></a>
-                        <a href="{!! route('bills.show', [$bills->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a href="{!! route('bills.edit', [$bills->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                        <a title="{!! __('form.print_bill') !!}" href="/pdf/bill/{!! $bills->id !!}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-file"></i></a>
+                        <a title="{!! __('form.show_bill') !!}" href="{!! route('bills.show', [$bills->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a title="{!! __('form.edit_bill') !!}" href="{!! route('bills.edit', [$bills->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                         <!-- {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!} -->
                     </div>
                     {!! Form::close() !!}
