@@ -139,9 +139,13 @@
 <!-- Submit Field -->
 <div class="box box-primary">
     <div class="box-body">
-        <div class="form-group col-sm-12 text-right">
-            {!! Form::submit(__('form.save'), ['class' => 'btn btn-primary']) !!}
-            <a href="{!! route('bills.index') !!}" class="btn btn-default">{!! __('form.cancel') !!}</a>
+        <div class="form-group col-sm-12">
+            <input type="checkbox" id="validate-enabled" checked="checked" />
+            {!! __('form.validations.equal_amounts_checkbox') !!}
+            <span class="pull-right">
+                {!! Form::submit(__('form.save'), ['class' => 'btn btn-primary']) !!}
+                <a href="{!! route('bills.index') !!}" class="btn btn-default">{!! __('form.cancel') !!}</a>
+            </span>
         </div>
     </div>
 </div>
@@ -256,7 +260,10 @@
         enableConcept();
 
         $(".main-form").on("submit", function() {
-            return validateImports();
+            if ($('#validate-enabled').is(":checked")) {
+                return validateImports();
+            }
+            return true;
         })
     });
 </script>

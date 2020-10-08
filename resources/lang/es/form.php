@@ -21,5 +21,8 @@ return [
         'from_date' => 'Fecha Desde',
         'to_date' => 'Fecha Hasta',
         'no_results_message' => 'No se encontraron resultados para la búsqueda seleccionada'
+    ],
+    'validations' => [
+        'equal_amounts_checkbox' => 'Validar iguales montos de pagos y conceptos'
     ]
 ];

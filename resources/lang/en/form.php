@@ -21,5 +21,8 @@ return [
         'from_date' => 'From Date',
         'to_date' => 'To Date',
         'no_results_message' => 'No results found'
+    ],
+    'validations' => [
+        'equal_amounts_checkbox' => 'Validate equal payment and concept amounts'
     ]
 ];
