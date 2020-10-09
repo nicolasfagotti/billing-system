@@ -3,7 +3,7 @@
 return [
     'label' => 'Recibo',
     'label_plural' => 'Recibos',
-    'id' => 'Id',
+    'id' => 'Recibo Nº',
     'cash' => 'Efectivo',
     'amount' => 'Importe Total',
     'created' => 'Fecha de Creación',

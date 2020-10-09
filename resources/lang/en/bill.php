@@ -3,7 +3,7 @@
 return [
     'label' => 'Bill',
     'label_plural' => 'Bills',
-    'id' => 'Id',
+    'id' => 'Nº',
     'cash' => 'Cash',
     'amount' => 'Total Amount',
     'created' => 'Created At',

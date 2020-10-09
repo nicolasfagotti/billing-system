@@ -2,6 +2,7 @@
     <table class="table" id="bills-table">
         <thead>
             <tr>
+                <th>{!! __('bill.id') !!}</th>
                 <th>{!! __('bill.created') !!}</th>
                 <th>{!! __('client.label') !!}</th>
                 <th class="text-right">{!! __('bill.amount') !!}</th>
@@ -11,6 +12,7 @@
         <tbody>
         @foreach($bills as $bills)
             <tr>
+                <td>{!! $bills->id !!}</td>
                 <td>{!! date('d/m/Y H:i:s', strtotime($bills->created_at)) !!}</td>
                 <td>{!! $bills->getClient()->full_name !!}</td>
                 <td class="text-right">{!! $bills->getFormatedAmount() !!}</td>
