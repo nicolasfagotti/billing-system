@@ -12,6 +12,7 @@ return [
     'edit_bill' => 'Edit Bill',
     'show_bill' => 'Show Bill',
     'print_bill' => 'Generate PDF',
+    'print_full_bill' => 'Generate Full PDF',
     'save' => 'Save',
     'cancel' => 'Cancel',
     'back' => 'Back',

@@ -228,20 +228,24 @@ class BillsController extends AppBaseController
         return redirect(route('bills.index'));
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function generatePDF($id)
     {
+        return $this->buildPDF($id, 'pdf.bill', '');
+    }
+
+    public function generateFullPDF($id)
+    {
+        return $this->buildPDF($id, 'pdf.bill-full', '-full');
+    }
+
+    public function buildPDF($id, $view, $titleSuffix) {
         $bill = $this->billsRepository->find($id);
         $client = $this->clientsRepository->find($bill->client_id);
         $checks = $this->checksRepository->all(['bill_id' => $id]);
         $transfers = $this->transfersRepository->all(['bill_id' => $id]);
         $concepts = $this->conceptsRepository->all(['bill_id' => $id]);
 
-        $title = "$client->full_name - $bill->created_at";
+        $title = "$client->full_name-$bill->created_at$titleSuffix";
         $data = [
             'title' => $title,
             'date' => DateToText::convert($bill->created_at),
@@ -252,7 +256,7 @@ class BillsController extends AppBaseController
             'transfers' => $transfers,
             'amountText' => NumberToText::convert($bill->getAmount()),
         ];
-        $pdf = PDF::loadView('pdf.bill', $data);
+        $pdf = PDF::loadView($view, $data);
 
         return $pdf->download("$title.pdf");
     }

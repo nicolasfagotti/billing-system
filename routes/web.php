@@ -28,3 +28,4 @@ Route::resource('concepts', 'ConceptsController')->middleware('auth');
 Route::resource('transfers', 'TransfersController')->middleware('auth');
 
 Route::get('pdf/bill/{id}', 'BillsController@generatePDF')->middleware('auth');
+Route::get('pdf/bill-full/{id}', 'BillsController@generateFullPDF')->middleware('auth');
