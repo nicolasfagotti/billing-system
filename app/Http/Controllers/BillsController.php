@@ -249,7 +249,7 @@ class BillsController extends AppBaseController
         $data = [
             'title' => $title,
             'date' => DateToText::convert($bill->created_at),
-            'clientName' => $client->full_name,
+            'clientName' => $client->informal_full_name,
             'bill' => $bill,
             'checks' => $checks,
             'concepts' => $concepts,

@@ -52,4 +52,9 @@ class Clients extends Model
     {
         return "$this->surname, $this->name";
     }
+
+    public function getInformalFullNameAttribute()
+    {
+        return "$this->name $this->surname";
+    }
 }
