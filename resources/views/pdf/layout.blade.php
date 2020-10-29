@@ -15,6 +15,7 @@
 				}
 				table.content th {
 					  background-color: #ddd;
+						text-align: center;
 				}
 				table {
 					  width: 100%;
