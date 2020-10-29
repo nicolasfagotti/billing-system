@@ -1,6 +1,7 @@
 <table>
     <tr>
         <td style="width: 50%;">
+            @if(count($checks) > 0)
             <table class="content">
                 <thead>
                     <tr>
@@ -19,6 +20,8 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
+            @if(count($transfers) > 0)
             <table class="content" style="margin-top: 10px;">
                 <thead>
                     <tr>
@@ -37,6 +40,7 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
             <p style="padding: 5px 10px; font-size: 1.05em; background-color: #ddd; border-radius: 2px; text-align: right;">
                 {!! __('bill.cash') !!}: {!! $bill->getFormatedCash() !!}
             </p>
