@@ -6,6 +6,6 @@
     <div>{!! $date !!}</div>
 </div>
 
-<p style="padding-left: 50px; padding-bottom: 20px;">
+<p style="padding-left: 4px; padding-bottom: 5px; line-height: 20pt;">
     Recibí de {!! $clientName !!} la cantidad de pesos {!! $amountText !!}.
 </p>

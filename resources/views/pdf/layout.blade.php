@@ -4,17 +4,17 @@
 		<title>{!! $title !!}</title>
 		<style>
 				th, td {
-						padding: 4px;
+						padding: 3px 4px;
 						vertical-align: top;
 				}
         table.content {
             font-size: 0.85em;
         }
   			table.content th, table.content td {
-						border: solid 1px black;
+						border: solid 0.5px black;
 				}
 				table.content th {
-					  background-color: #ddd;
+					  background-color: #f6f6f6;
 						text-align: center;
 				}
 				table {

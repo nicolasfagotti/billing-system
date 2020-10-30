@@ -49,6 +49,9 @@
             <table class="content">
                 <thead>
                     <tr>
+                        <th colspan="2">{!! __('pdf.concept_detail') !!}</th>
+                    </tr>
+                    <tr>
                         <th style="width: 70%;">{!! __('concept.label') !!}</th>
                         <th>{!! __('concept.amount') !!}</th>
                     </tr>
